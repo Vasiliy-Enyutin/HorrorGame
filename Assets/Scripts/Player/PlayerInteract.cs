@@ -9,28 +9,43 @@ public class PlayerInteract : MonoBehaviour
 
     [SerializeField] private LayerMask objToHit;
     private RaycastHit hit;
+    private HUD hud;
 
     #endregion
 
     #region Methods
 
+    private void Awake()
+    {
+        hud = FindObjectOfType<HUD>();
+    }
+
     private void Update()
     {
         Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * 2.5f, Color.yellow);
 
-        if (Input.GetMouseButtonDown(0))
-            OnLeftButtonMousePressed();
+        DetectInteractableObject();
     }
 
-    private void OnLeftButtonMousePressed()
+    private void DetectInteractableObject()
     {
         if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, 2.5f))
         {
             IInteractable interactable = hit.collider.gameObject.GetComponent<IInteractable>();
             if (interactable != null)
             {
-                interactable.Interact();
+                hud.ShowInteractHint = true;
+                if (Input.GetMouseButtonDown(0))
+                    interactable.Interact();
             }
+            else
+            {
+                hud.ShowInteractHint = false;
+            }
+        }
+        else
+        {
+            hud.ShowInteractHint = false;
         }
     }
 
