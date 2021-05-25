@@ -10,6 +10,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float moveSpeed = 5f;
 
     private CharacterController controller;
+    private AudioSource audioSource;
 
     #endregion
 
@@ -18,6 +19,7 @@ public class PlayerMovement : MonoBehaviour
     private void Awake()
     {
         controller = GetComponent<CharacterController>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     private void FixedUpdate()
@@ -32,6 +34,19 @@ public class PlayerMovement : MonoBehaviour
 
         Vector3 moveDirection = transform.right * x + transform.forward * z;
         controller.Move(moveDirection * moveSpeed * Time.fixedDeltaTime);
+
+        WalkAudioEffect(x, z);
+    }
+
+    private void WalkAudioEffect(float x, float z)
+    {
+        if (x != 0 || z != 0)
+        {
+            if (!audioSource.isPlaying)
+                audioSource.PlayOneShot(AudioStorage.Instance.SFX_PlayerWalk);
+        }
+        else
+            audioSource.Stop();
     }
 
     #endregion

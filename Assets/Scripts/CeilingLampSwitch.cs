@@ -3,11 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Lamp : MonoBehaviour, IInteractable
+public class CeilingLampSwitch : MonoBehaviour, IInteractable
 {
     #region Fields
 
-    private Light[] lights;
+    [SerializeField] private Light[] lightsToSwitch;
     private AudioSource audioSource;
 
     #endregion
@@ -16,7 +16,6 @@ public class Lamp : MonoBehaviour, IInteractable
 
     private void Awake()
     {
-        lights = GetComponentsInChildren<Light>();
         audioSource = GetComponent<AudioSource>();
     }
 
@@ -28,7 +27,7 @@ public class Lamp : MonoBehaviour, IInteractable
     private void Switch()
     {
         LampSwitchAudioEffect();
-        foreach (Light light in lights)
+        foreach (Light light in lightsToSwitch)
         {
             if (light.enabled)
                 light.enabled = false;
@@ -41,5 +40,6 @@ public class Lamp : MonoBehaviour, IInteractable
     {
         audioSource.PlayOneShot(AudioStorage.Instance.SFX_LampSwitch);
     }
+
     #endregion
 }
