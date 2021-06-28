@@ -9,7 +9,6 @@ public class PlayerInteract : MonoBehaviour
 
     [SerializeField] private LayerMask objToHit;
     private RaycastHit hit;
-    private HUD hud;
 
     #endregion
 
@@ -17,7 +16,6 @@ public class PlayerInteract : MonoBehaviour
 
     private void Awake()
     {
-        hud = FindObjectOfType<HUD>();
     }
 
     private void Update()
@@ -34,20 +32,20 @@ public class PlayerInteract : MonoBehaviour
             IInteractable interactable = hit.collider.gameObject.GetComponent<IInteractable>();
             if (interactable != null)
             {
-                hud.ShowInteractHint = true;
+                HUD.Instance.ShowInteractHint = true;
                 if (Input.GetMouseButtonDown(0))
                     interactable.Interact();
             }
             else
             {
-                hud.ShowInteractHint = false;
-                hud.HideAllHints();
+                HUD.Instance.ShowInteractHint = false;
+                HUD.Instance.HideAllHints();
             }
         }
         else
         {
-            hud.ShowInteractHint = false;
-            hud.HideAllHints();
+            HUD.Instance.ShowInteractHint = false;
+            HUD.Instance.HideAllHints();
         }
     }
 

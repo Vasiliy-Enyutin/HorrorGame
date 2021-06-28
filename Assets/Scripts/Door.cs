@@ -14,7 +14,6 @@ public class Door : MonoBehaviour, IInteractable
     private bool pauseInteraction = false;
     private float waitTimer = 1f;
 
-    private HUD hud;
 
     #endregion
 
@@ -24,7 +23,6 @@ public class Door : MonoBehaviour, IInteractable
     {
         playerInventory = FindObjectOfType<PlayerInventory>();
         animator = GetComponent<Animator>();
-        hud = FindObjectOfType<HUD>();
     }
 
     public void Interact()
@@ -37,7 +35,7 @@ public class Door : MonoBehaviour, IInteractable
         if (accessLevel == DoorAccessLevels.locked)
         {
             // sound locked door
-            hud.ShowDoorLockedHint = true;
+            HUD.Instance.ShowDoorLockedHint = true;
             return;
         }
 
@@ -57,7 +55,7 @@ public class Door : MonoBehaviour, IInteractable
             }
             if (!doorIsOpen)
             {
-                hud.ShowDoorKeyHint = true;
+                HUD.Instance.ShowDoorKeyHint = true;
             }
         }
         else

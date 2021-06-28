@@ -946,7 +946,7 @@ GameObject:
   - component: {fileID: 882674781}
   - component: {fileID: 882674780}
   m_Layer: 5
-  m_Name: Note_ImClose
+  m_Name: Note_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2212,8 +2212,10 @@ GameObject:
   - component: {fileID: 1957000173}
   - component: {fileID: 1957000172}
   - component: {fileID: 1957000171}
+  - component: {fileID: 1957000175}
+  - component: {fileID: 1957000174}
   m_Layer: 0
-  m_Name: Note (1)
+  m_Name: Note_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2280,6 +2282,32 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1957000174
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1957000170}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d89660b0b9dab8d49b987514246b476f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  noteNumber: 0
+--- !u!65 &1957000175
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1957000170}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.0029060477, y: 0.0042347745, z: 0.000053775486}
+  m_Center: {x: 0.012771377, y: 0.005260022, z: -0.008887408}
 --- !u!1 &1991265539
 GameObject:
   m_ObjectHideFlags: 0
@@ -2390,6 +2418,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55d53c7c83c0de841b894930b68751c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  notes:
+  - {fileID: 882674778}
   interactHint: {fileID: 1061131335}
   doorKeyHint: {fileID: 1802478777}
   doorLockedHint: {fileID: 1526178060}

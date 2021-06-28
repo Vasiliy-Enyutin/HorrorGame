@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,12 +7,16 @@ public class HUD : Singleton<HUD>
 {
     #region Fields
 
+    [SerializeField] private GameObject[] notes;
     [SerializeField] private GameObject interactHint;
     [SerializeField] private GameObject doorKeyHint;
     [SerializeField] private GameObject doorLockedHint;
     private bool showInteractHint = false;
     private bool showDoorKeyHint = false;
     private bool showDoorLockedHint = false;
+
+    PlayerMovement playerMovement;
+    MouseLook mouseLook;
 
     #endregion
 
@@ -40,18 +45,41 @@ public class HUD : Singleton<HUD>
     private void Awake()
     {
         interactHint.SetActive(false);
+        playerMovement = FindObjectOfType<PlayerMovement>();
+        mouseLook = FindObjectOfType<MouseLook>();
     }
 
     private void Update()
     {
         ShowHint();
+        if (Input.GetKeyDown(KeyCode.Escape))
+            HideNote();
+    }
+
+    public void ShowNote(int noteNumber)
+    {
+        notes[noteNumber].SetActive(true);
+        playerMovement.enabled = false;
+        mouseLook.enabled = false;
     }
 
     public void HideAllHints()
     {
+        playerMovement.enabled = true;
+        mouseLook.enabled = true;
+
         showInteractHint = false;
         showDoorKeyHint = false;
         showDoorLockedHint = false;
+    }
+
+    private void HideNote()
+    {
+        foreach (GameObject note in notes)
+        {
+            if (note.activeSelf)
+                note.SetActive(false);
+        }
     }
 
     private void ShowHint()
