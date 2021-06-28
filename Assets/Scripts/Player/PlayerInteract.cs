@@ -22,7 +22,7 @@ public class PlayerInteract : MonoBehaviour
 
     private void Update()
     {
-        Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * 2.5f, Color.yellow);
+        Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * 2f, Color.yellow);
 
         DetectInteractableObject();
     }
@@ -41,11 +41,13 @@ public class PlayerInteract : MonoBehaviour
             else
             {
                 hud.ShowInteractHint = false;
+                hud.HideAllHints();
             }
         }
         else
         {
             hud.ShowInteractHint = false;
+            hud.HideAllHints();
         }
     }
 
