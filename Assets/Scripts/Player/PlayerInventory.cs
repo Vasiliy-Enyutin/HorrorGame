@@ -4,5 +4,5 @@ using UnityEngine;
 
 public class PlayerInventory : MonoBehaviour
 {
-    public List<DoorAccessLevels> Keys = new List<DoorAccessLevels> { DoorAccessLevels.open }; 
+    public List<Keys> PlayerKeys = new List<Keys> { Keys.silverKey }; 
 }

@@ -32,20 +32,18 @@ public class PlayerInteract : MonoBehaviour
             IInteractable interactable = hit.collider.gameObject.GetComponent<IInteractable>();
             if (interactable != null)
             {
-                HUD.Instance.ShowInteractHint = true;
+                HUD.Instance.ShowInteractHint();
                 if (Input.GetMouseButtonDown(0))
                     interactable.Interact();
             }
             else
             {
-                HUD.Instance.ShowInteractHint = false;
-                HUD.Instance.HideAllHints();
+                HUD.Instance.HideActiveHint();
             }
         }
         else
         {
-            HUD.Instance.ShowInteractHint = false;
-            HUD.Instance.HideAllHints();
+            HUD.Instance.HideActiveHint();
         }
     }
 

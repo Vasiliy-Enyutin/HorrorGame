@@ -1457,7 +1457,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa7db648eeb45934c809502d2200d93d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Keys: 00000000
+  PlayerKeys: 01000000
 --- !u!1 &1284923404
 GameObject:
   m_ObjectHideFlags: 0
@@ -3680,6 +3680,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5716322606553819293, guid: 2cea1ac64243861439ece28181fe40f8,
+        type: 3}
+      propertyPath: key
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5716322606553819293, guid: 2cea1ac64243861439ece28181fe40f8,
         type: 3}
       propertyPath: accessLevel

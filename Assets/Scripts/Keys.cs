@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum DoorAccessLevels
+public enum Keys
 {
-    open,
-    locked,
-    key
+    none,
+    silverKey,
+    goldenKey
 }

@@ -8,6 +8,7 @@ public class Door : MonoBehaviour, IInteractable
     #region Fields
 
     [SerializeField] private DoorAccessLevels accessLevel;
+    [SerializeField] private Keys key;
     private PlayerInventory playerInventory;
     private Animator animator;
     private bool doorIsOpen = false;
@@ -35,7 +36,7 @@ public class Door : MonoBehaviour, IInteractable
         if (accessLevel == DoorAccessLevels.locked)
         {
             // sound locked door
-            HUD.Instance.ShowDoorLockedHint = true;
+            HUD.Instance.ShowDoorLockedHint();
             return;
         }
 
@@ -44,18 +45,28 @@ public class Door : MonoBehaviour, IInteractable
 
         if (!doorIsOpen)
         {
-            foreach (DoorAccessLevels key in playerInventory.Keys)
+            if (accessLevel == DoorAccessLevels.open)
             {
-                if (key == accessLevel)
-                {
-                    animator.Play("DoorOpen");
-                    doorIsOpen = true;
-                    break;
-                }
+                animator.Play("DoorOpen");
+                doorIsOpen = true;
             }
-            if (!doorIsOpen)
+            else if (accessLevel == DoorAccessLevels.locked)
             {
-                HUD.Instance.ShowDoorKeyHint = true;
+                HUD.Instance.ShowDoorKeyHint();
+            }
+            else if (accessLevel == DoorAccessLevels.key)
+            {
+                foreach (Keys playerKey in playerInventory.PlayerKeys)
+                {
+                    if (playerKey == key)
+                    {
+                        animator.Play("DoorOpen");
+                        doorIsOpen = true;
+                        break;
+                    }
+                }
+                if (!doorIsOpen)
+                    HUD.Instance.ShowDoorKeyHint();
             }
         }
         else

@@ -11,32 +11,12 @@ public class HUD : Singleton<HUD>
     [SerializeField] private GameObject interactHint;
     [SerializeField] private GameObject doorKeyHint;
     [SerializeField] private GameObject doorLockedHint;
-    private bool showInteractHint = false;
-    private bool showDoorKeyHint = false;
-    private bool showDoorLockedHint = false;
 
-    PlayerMovement playerMovement;
-    MouseLook mouseLook;
+    private GameObject activeHint;
+    private GameObject activeNote;
 
-    #endregion
-
-    #region Properties
-
-    public bool ShowInteractHint
-    {
-        get { return showInteractHint; }
-        set { showInteractHint = value; }
-    }
-    public bool ShowDoorKeyHint
-    {
-        get { return showDoorKeyHint; }
-        set { showDoorKeyHint = value; }
-    }
-    public bool ShowDoorLockedHint
-    {
-        get { return showDoorLockedHint; }
-        set { showDoorLockedHint = value; }
-    }
+    private PlayerMovement playerMovement;
+    private MouseLook mouseLook;
 
     #endregion
 
@@ -44,61 +24,64 @@ public class HUD : Singleton<HUD>
 
     private void Awake()
     {
-        interactHint.SetActive(false);
         playerMovement = FindObjectOfType<PlayerMovement>();
         mouseLook = FindObjectOfType<MouseLook>();
     }
 
     private void Update()
     {
-        ShowHint();
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (activeNote != null && Input.GetKeyDown(KeyCode.Escape))
             HideNote();
     }
 
     public void ShowNote(int noteNumber)
     {
-        notes[noteNumber].SetActive(true);
+        HideActiveHint();
+        activeNote = notes[noteNumber];
+        activeNote.SetActive(true);
         playerMovement.enabled = false;
         mouseLook.enabled = false;
     }
 
-    public void HideAllHints()
-    {
-        playerMovement.enabled = true;
-        mouseLook.enabled = true;
-
-        showInteractHint = false;
-        showDoorKeyHint = false;
-        showDoorLockedHint = false;
-    }
-
     private void HideNote()
     {
-        foreach (GameObject note in notes)
+        activeNote.SetActive(false);
+        activeNote = null;
+        playerMovement.enabled = true;
+        mouseLook.enabled = true;
+    }
+
+    public void HideActiveHint()
+    {
+        if (activeHint != null)
         {
-            if (note.activeSelf)
-                note.SetActive(false);
+            activeHint.SetActive(false);
+            activeHint = null;
         }
     }
 
-    private void ShowHint()
+    public void ShowInteractHint()
     {
-        if (showInteractHint && !showDoorKeyHint && !showDoorLockedHint)
-            interactHint.SetActive(true);
-        else
-            interactHint.SetActive(false);
+        if (activeHint != null || activeNote != null)
+            return;
 
-        if (showDoorKeyHint)
-            doorKeyHint.SetActive(true);
-        else
-            doorKeyHint.SetActive(false);
+        HideActiveHint();
+        activeHint = interactHint;
+        activeHint.SetActive(true);
+    }
 
-        if (showDoorLockedHint)
-            doorLockedHint.SetActive(true);
-        else
-            doorLockedHint.SetActive(false);
+    public void ShowDoorLockedHint()
+    {
+        HideActiveHint();
+        activeHint = doorLockedHint;
+        activeHint.SetActive(true);
+    }
 
+    public void ShowDoorKeyHint()
+    {
+        HideActiveHint();
+        activeHint = doorKeyHint;
+        activeHint.SetActive(true);
     }
 
     #endregion
